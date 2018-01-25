@@ -10,15 +10,24 @@ class DockingStation
   #if there are bikes in the rack, one is taken from the end, else an error is given
   def release_bike
     # Create a variable = Instantiation of class to be returned
-    raise "No bikes available" unless @bike_rack.length > 0
+    raise "No bikes available" if empty?
     @bike_rack.pop
   end
   #a bike can be docked - pushed into the bike_rack. if the rack has 20 bikes, it is full
   #and an error is raised
   def dock(bike)
-    raise "Dock is full" unless @bike_rack.length < 20
+    raise "Dock is full" if full?
     @bike_rack.push(@bike)
     @bike = bike
+  end
+
+  private
+  def full?
+    @bike_rack.count >= 20
+  end
+
+  def empty?
+    @bike_rack.empty?
   end
 
   #def bike
